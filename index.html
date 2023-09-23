@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NET Helper</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        clifford: '#da373d',
+                    }
+                },
+                plugins: [
+                    require("@tailwindcss/forms")({
+                        //strategy: 'base', // only generate global styles
+                        strategy: 'class', // only generate classes
+                    })
+                ]
+            }
+        }
+    </script> -->
+
+    <!-- Alpine Plugins -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
+    <!-- Alpine Core -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            label{
+                @apply mx-2 mb-2 block text-blue-100 font-bold ;
+            }
+             
+          .box-1 {
+            @apply col-span-2 border border-gray-900 rounded-md bg-gray-800 h-full p-3;
+          }
+
+          .box-1 > div {
+            @apply h-[calc(100%-2.2rem)];
+          }
+
+          .form-control {
+            @apply px-2 py-1 text-slate-700 border border-gray-500 rounded bg-gray-50;
+          }
+
+          input[type='text'],
+          textarea {
+            @apply form-control;
+          }
+          
+        }
+      </style>
+</head>
+
+<body>
+
+    <div x-data="{ 
+        input: $persist(''),
+        propertiesRegex: $persist('/(public|private|protected|internal|static|virtual|override)[\s]+((?:\w+\s*\??))[\s]+(([\p{L}][\p{L}\p{N}_]*))[\s]*\{[^{}]*\}/gu'),
+        modifier: $persist(''),
+        modifier1: $persist(''),
+        modifier2: $persist(''),
+        modifier3: $persist(''),
+        
+        get propertiesList() {
+            const p = this.propertiesRegex.split('/')
+            const m = p[p.length - 1]
+            const e = p.slice(1, -1).join('/');
+            
+            var regex = new RegExp(e, m);
+
+            // Use the RegExp object to find matches
+            const matches = [...this.input.matchAll(regex)];
+            // extract only the important information
+            const propTypesAndNames = matches.map(m => [m[2], m[3]]) 
+            
+            return propTypesAndNames;
+        },
+        get properties(){
+            return this.propertiesList.map(p => p.join(' ')).join('\n')
+        },
+        get output1() {
+            var retList = []
+            var m = this.modifier1
+            if(m.length > 0){
+                for(var i = 0; i < this.propertiesList.length; i++){
+                    var o = m
+                    const words = this.propertiesList[i]
+                    for(var w = 0; w < words.length; w++) {
+                        const reg = new RegExp('\\{' + w + '\\}', 'g');
+                        if (o.search(reg) > -1) {
+                            o = o.replace(reg, words[w]);                            
+                        }
+                    }
+                    retList.push(o)
+                }
+            }
+            return retList.join('\n')
+        },
+        get output2() {
+            var retList = []
+            var m = this.modifier2
+            if(m.length > 0){
+                for(var i = 0; i < this.propertiesList.length; i++){
+                    var o = m
+                    const words = this.propertiesList[i]
+                    for(var w = 0; w < words.length; w++) {
+                        const reg = new RegExp('\\{' + w + '\\}', 'g');
+                        if (o.search(reg) > -1) {
+                            o = o.replace(reg, words[w]);                            
+                        }
+                    }
+                    retList.push(o)
+                }
+            }
+            return retList.join('\n')
+        },
+        get output3() {
+            var retList = []
+            var m = this.modifier3
+            if(m.length > 0){
+                for(var i = 0; i < this.propertiesList.length; i++){
+                    var o = m
+                    const words = this.propertiesList[i]
+                    for(var w = 0; w < words.length; w++) {
+                        const reg = new RegExp('\\{' + w + '\\}', 'g');
+                        if (o.search(reg) > -1) {
+                            o = o.replace(reg, words[w]);                            
+                        }
+                    }
+                    retList.push(o)
+                }
+            }
+            return retList.join('\n')
+        }
+       
+    }">
+        <div class="grid grid-cols-12 grid-flow-row gap-3 h-screen p-3">
+            <div class="box-1">
+                <div>
+                    <label>Class Definition</label>
+                    <textarea class="w-full h-full " x-model="input"></textarea>
+                </div>
+            </div>
+            <div class="box-1">
+                <div>
+                    <label>Modifier 1</label>
+                    <textarea class="w-full h-full " x-model="modifier1"></textarea>
+                </div>
+            </div>
+            <div class="box-1">
+                <div>
+                    <label>Modifier 2</label>
+                    <textarea class="w-full h-full " x-model="modifier2"></textarea>
+                </div>
+            </div>
+            <div class="box-1">
+                <div>
+                    <label>Modifier 3</label>
+                    <textarea class="w-full h-full " x-model="modifier3"></textarea>
+                </div>
+            </div>
+            <div class="box-1"></div>
+            <div class="box-1"></div>
+            <div class="box-1">
+                <div>
+                    <label>Property RegExp</label>
+                    <textarea class="w-full pb-5" x-model="propertiesRegex"></textarea>
+                </div>
+            </div>
+            <div class="box-1">
+                <div>
+                    <label>Output 1</label>
+                    <textarea class="w-full h-full whitespace-pre" x-model="output1"></textarea>
+                </div>
+            </div>
+            <div class="box-1">
+                <div>
+                    <label>Output 2</label>
+                    <textarea class="w-full h-full whitespace-pre" x-model="output2"></textarea>
+                </div>
+            </div>
+            <div class="box-1">
+                <div>
+                    <label>Output 3</label>
+                    <textarea class="w-full h-full whitespace-pre" x-model="output3"></textarea>
+                </div>
+            </div>
+            <div class="box-1"></div>
+            <div class="box-1"></div>
+            <div class="box-1">
+                <div>
+                    <label>Extracted Property Data</label>
+                    <textarea class="w-full h-full " x-model="properties"></textarea>
+                </div>
+            </div>
+            <div class="box-1"></div>
+            <div class="box-1"></div>
+            <div class="box-1">
+               
+            </div>
+            <div class="box-1"></div>
+            <div class="box-1">
+               
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
