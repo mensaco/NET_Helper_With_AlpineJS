@@ -7,26 +7,11 @@
     <title>NET Helper</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        clifford: '#da373d',
-                    }
-                },
-                plugins: [
-                    require("@tailwindcss/forms")({
-                        //strategy: 'base', // only generate global styles
-                        strategy: 'class', // only generate classes
-                    })
-                ]
-            }
-        }
-    </script> -->
 
     <!-- Alpine Plugins -->
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@ryangjchandler/alpine-clipboard@2.x.x/dist/alpine-clipboard.js"
+        defer></script>
     <!-- Alpine Core -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
@@ -66,6 +51,8 @@
         modifier1: $persist(''),
         modifier2: $persist(''),
         modifier3: $persist(''),
+        modifier4: $persist(''),
+        modifier5: $persist(''),
         
         get propertiesList() {
             const p = this.propertiesRegex.split('/')
@@ -137,6 +124,42 @@
                 }
             }
             return retList.join('\n')
+        },
+        get output4() {
+            var retList = []
+            var m = this.modifier4
+            if(m.length > 0){
+                for(var i = 0; i < this.propertiesList.length; i++){
+                    var o = m
+                    const words = this.propertiesList[i]
+                    for(var w = 0; w < words.length; w++) {
+                        const reg = new RegExp('\\{' + w + '\\}', 'g');
+                        if (o.search(reg) > -1) {
+                            o = o.replace(reg, words[w]);                            
+                        }
+                    }
+                    retList.push(o)
+                }
+            }
+            return retList.join('\n')
+        },
+        get output5() {
+            var retList = []
+            var m = this.modifier5
+            if(m.length > 0){
+                for(var i = 0; i < this.propertiesList.length; i++){
+                    var o = m
+                    const words = this.propertiesList[i]
+                    for(var w = 0; w < words.length; w++) {
+                        const reg = new RegExp('\\{' + w + '\\}', 'g');
+                        if (o.search(reg) > -1) {
+                            o = o.replace(reg, words[w]);                            
+                        }
+                    }
+                    retList.push(o)
+                }
+            }
+            return retList.join('\n')
         }
        
     }">
@@ -165,8 +188,18 @@
                     <textarea class="w-full h-full " x-model="modifier3"></textarea>
                 </div>
             </div>
-            <div class="box-1"></div>
-            <div class="box-1"></div>
+            <div class="box-1">
+                <div>
+                    <label>Modifier 4</label>
+                    <textarea class="w-full h-full " x-model="modifier4"></textarea>
+                </div>
+            </div>
+            <div class="box-1">
+                <div>
+                    <label>Modifier 5</label>
+                    <textarea class="w-full h-full " x-model="modifier5"></textarea>
+                </div>
+            </div>
             <div class="box-1">
                 <div>
                     <label>Property RegExp</label>
@@ -175,24 +208,79 @@
             </div>
             <div class="box-1">
                 <div>
-                    <label>Output 1</label>
+                    <div class="flex justify-between items-center"><label>Output 1</label>
+                        <button type="button" class="text-yellow-50 hover:text-yellow-500 mb-1"
+                            @click="$clipboard(output1)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+                            </svg>
+                        </button>
+                    </div>
                     <textarea class="w-full h-full whitespace-pre" x-model="output1"></textarea>
                 </div>
             </div>
             <div class="box-1">
                 <div>
-                    <label>Output 2</label>
+                    <div class="flex justify-between items-center"><label>Output 2</label>
+                        <button type="button" class="text-yellow-50 hover:text-yellow-500 mb-1"
+                            @click="$clipboard(output2)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+                            </svg>
+                        </button>
+                    </div>
                     <textarea class="w-full h-full whitespace-pre" x-model="output2"></textarea>
                 </div>
             </div>
             <div class="box-1">
                 <div>
-                    <label>Output 3</label>
+                    <div class="flex justify-between items-center"><label>Output 3</label>
+                        <button type="button" class="text-yellow-50 hover:text-yellow-500 mb-1"
+                            @click="$clipboard(output3)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+                            </svg>
+                        </button>
+                    </div>
                     <textarea class="w-full h-full whitespace-pre" x-model="output3"></textarea>
                 </div>
             </div>
-            <div class="box-1"></div>
-            <div class="box-1"></div>
+            <div class="box-1">
+                <div>
+                    <div class="flex justify-between items-center"><label>Output 4</label>
+                        <button type="button" class="text-yellow-50 hover:text-yellow-500 mb-1"
+                            @click="$clipboard(output4)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <textarea class="w-full h-full whitespace-pre" x-model="output4"></textarea>
+                </div>
+            </div>
+            <div class="box-1">
+                <div>
+                    <div class="flex justify-between items-center"><label>Output 5</label>
+                        <button type="button" class="text-yellow-50 hover:text-yellow-500 mb-1"
+                            @click="$clipboard(output5)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <textarea class="w-full h-full whitespace-pre" x-model="output5"></textarea>
+                </div>
+            </div>
             <div class="box-1">
                 <div>
                     <label>Extracted Property Data</label>
@@ -202,11 +290,11 @@
             <div class="box-1"></div>
             <div class="box-1"></div>
             <div class="box-1">
-               
+
             </div>
             <div class="box-1"></div>
             <div class="box-1">
-               
+
             </div>
         </div>
     </div>
