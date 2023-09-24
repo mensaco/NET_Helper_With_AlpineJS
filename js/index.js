@@ -1,8 +1,8 @@
-// copy text
-window.copyText = function (textToCopy) {
-    navigator.clipboard.writeText(textToCopy);
-    document.body.removeChild(myTemporaryInputElement);
-}
+// // copy text
+// window.copyText = function (textToCopy) {
+//     navigator.clipboard.writeText(textToCopy);
+//     document.body.removeChild(myTemporaryInputElement);
+// }
 
 
 
@@ -574,6 +574,9 @@ window.appObject = () => {
         get output5() {
             this.modifier = this.modifier5
             return this.output
+        },
+        copyText(textToCopy) {
+            navigator.clipboard.writeText(textToCopy);
         }
 
     }
