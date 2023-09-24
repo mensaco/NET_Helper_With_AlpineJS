@@ -10,6 +10,9 @@
 
     <style type="text/tailwindcss">
         @layer utilities {
+            body {
+                font-family: monospace;
+            }
             label{
                 @apply mx-2 mb-2 block text-blue-100 font-bold ;
             }
@@ -38,130 +41,12 @@
 
 <body>
 
-    <div x-data="{
-        input: $persist(''),
-        propertiesRegex: $persist('/(public|private|protected|internal|static|virtual|override)[\\s]+((?:\\w+\\s*\\??))[\\s]+(([\\p{L}][\\p{L}\\p{N}_]*))[\\s]*\\{[^{}]*\\}/gu'),
-        modifier: $persist(''),
-        modifier1: $persist(''),
-        modifier2: $persist(''),
-        modifier3: $persist(''),
-        modifier4: $persist(''),
-        modifier5: $persist(''),
-
-        get propertiesList() {
-            const p = this.propertiesRegex.split('/')
-            const m = p[p.length - 1]
-            const e = p.slice(1, -1).join('/');
-
-            var regex = new RegExp(e, m);
-
-            // Use the RegExp object to find matches
-            const matches = [...this.input.matchAll(regex)];
-            // extract only the important information
-            const propTypesAndNames = matches.map(m => [m[2], m[3]])
-
-            return propTypesAndNames;
-        },
-        get properties() {
-            return this.propertiesList.map(p => p.join(' ')).join('\n')
-        },
-        get output1() {
-            var retList = []
-            var m = this.modifier1
-            if (m.length > 0) {
-                for (var i = 0; i < this.propertiesList.length; i++) {
-                    var o = m
-                    const words = this.propertiesList[i]
-                    for (var w = 0; w < words.length; w++) {
-                        const reg = new RegExp('\\{' + w + '\\}', 'g');
-                        if (o.search(reg) > -1) {
-                            o = o.replace(reg, words[w]);
-                        }
-                    }
-                    retList.push(o)
-                }
-            }
-            return retList.join('\n')
-        },
-        get output2() {
-            var retList = []
-            var m = this.modifier2
-            if (m.length > 0) {
-                for (var i = 0; i < this.propertiesList.length; i++) {
-                    var o = m
-                    const words = this.propertiesList[i]
-                    for (var w = 0; w < words.length; w++) {
-                        const reg = new RegExp('\\{' + w + '\\}', 'g');
-                        if (o.search(reg) > -1) {
-                            o = o.replace(reg, words[w]);
-                        }
-                    }
-                    retList.push(o)
-                }
-            }
-            return retList.join('\n')
-        },
-        get output3() {
-            var retList = []
-            var m = this.modifier3
-            if (m.length > 0) {
-                for (var i = 0; i < this.propertiesList.length; i++) {
-                    var o = m
-                    const words = this.propertiesList[i]
-                    for (var w = 0; w < words.length; w++) {
-                        const reg = new RegExp('\\{' + w + '\\}', 'g');
-                        if (o.search(reg) > -1) {
-                            o = o.replace(reg, words[w]);
-                        }
-                    }
-                    retList.push(o)
-                }
-            }
-            return retList.join('\n')
-        },
-        get output4() {
-            var retList = []
-            var m = this.modifier4
-            if (m.length > 0) {
-                for (var i = 0; i < this.propertiesList.length; i++) {
-                    var o = m
-                    const words = this.propertiesList[i]
-                    for (var w = 0; w < words.length; w++) {
-                        const reg = new RegExp('\\{' + w + '\\}', 'g');
-                        if (o.search(reg) > -1) {
-                            o = o.replace(reg, words[w]);
-                        }
-                    }
-                    retList.push(o)
-                }
-            }
-            return retList.join('\n')
-        },
-        get output5() {
-            var retList = []
-            var m = this.modifier5
-            if (m.length > 0) {
-                for (var i = 0; i < this.propertiesList.length; i++) {
-                    var o = m
-                    const words = this.propertiesList[i]
-                    for (var w = 0; w < words.length; w++) {
-                        const reg = new RegExp('\\{' + w + '\\}', 'g');
-                        if (o.search(reg) > -1) {
-                            o = o.replace(reg, words[w]);
-                        }
-                    }
-                    retList.push(o)
-                }
-            }
-            return retList.join('\n')
-        }
-
-    }">
+    <div x-data="appObject()">
         <div class="grid grid-cols-12 grid-flow-row gap-3 h-screen p-3">
             <div class="box-1">
                 <div>
                     <label>Class Definition</label>
-                    <textarea class="" x-model="input"></textarea>
+                    <textarea id="classDefinition" class="" x-model="input"></textarea>
                 </div>
             </div>
             <div class="box-1">
@@ -281,11 +166,7 @@
                     <textarea class="" x-model="properties"></textarea>
                 </div>
             </div>
-            <!-- <div class="box-1"></div>
-            <div class="box-1"></div>
-            <div class="box-1"></div>
-            <div class="box-1" ></div> -->
-            <!-- <div class="box-1"></div> -->
+            
         </div>
     </div>
 
@@ -297,11 +178,12 @@
 
     <!-- Alpine Plugins -->
     <script src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/@ryangjchandler/alpine-clipboard@2.x.x/dist/alpine-clipboard.js"
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@ryangjchandler/alpine-clipboard@2.x.x/dist/alpine-clipboard.js" -->
         defer></script>
     <!-- Alpine Core -->
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
+    <script src="/js/index.js"></script>
     
 
 </body>
