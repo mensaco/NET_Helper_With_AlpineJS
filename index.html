@@ -6,14 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NET Helper</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Alpine Plugins -->
-    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@ryangjchandler/alpine-clipboard@2.x.x/dist/alpine-clipboard.js"
-        defer></script>
-    <!-- Alpine Core -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+   
 
     <style type="text/tailwindcss">
         @layer utilities {
@@ -35,53 +28,54 @@
 
           input[type='text'],
           textarea {
-            @apply form-control;
+            @apply form-control w-full h-full;
           }
           
         }
       </style>
+
 </head>
 
 <body>
 
-    <div x-data="{ 
+    <div x-data="{
         input: $persist(''),
-        propertiesRegex: $persist('/(public|private|protected|internal|static|virtual|override)[\s]+((?:\w+\s*\??))[\s]+(([\p{L}][\p{L}\p{N}_]*))[\s]*\{[^{}]*\}/gu'),
+        propertiesRegex: $persist('/(public|private|protected|internal|static|virtual|override)[\\s]+((?:\\w+\\s*\\??))[\\s]+(([\\p{L}][\\p{L}\\p{N}_]*))[\\s]*\\{[^{}]*\\}/gu'),
         modifier: $persist(''),
         modifier1: $persist(''),
         modifier2: $persist(''),
         modifier3: $persist(''),
         modifier4: $persist(''),
         modifier5: $persist(''),
-        
+
         get propertiesList() {
             const p = this.propertiesRegex.split('/')
             const m = p[p.length - 1]
             const e = p.slice(1, -1).join('/');
-            
+
             var regex = new RegExp(e, m);
 
             // Use the RegExp object to find matches
             const matches = [...this.input.matchAll(regex)];
             // extract only the important information
-            const propTypesAndNames = matches.map(m => [m[2], m[3]]) 
-            
+            const propTypesAndNames = matches.map(m => [m[2], m[3]])
+
             return propTypesAndNames;
         },
-        get properties(){
+        get properties() {
             return this.propertiesList.map(p => p.join(' ')).join('\n')
         },
         get output1() {
             var retList = []
             var m = this.modifier1
-            if(m.length > 0){
-                for(var i = 0; i < this.propertiesList.length; i++){
+            if (m.length > 0) {
+                for (var i = 0; i < this.propertiesList.length; i++) {
                     var o = m
                     const words = this.propertiesList[i]
-                    for(var w = 0; w < words.length; w++) {
+                    for (var w = 0; w < words.length; w++) {
                         const reg = new RegExp('\\{' + w + '\\}', 'g');
                         if (o.search(reg) > -1) {
-                            o = o.replace(reg, words[w]);                            
+                            o = o.replace(reg, words[w]);
                         }
                     }
                     retList.push(o)
@@ -92,14 +86,14 @@
         get output2() {
             var retList = []
             var m = this.modifier2
-            if(m.length > 0){
-                for(var i = 0; i < this.propertiesList.length; i++){
+            if (m.length > 0) {
+                for (var i = 0; i < this.propertiesList.length; i++) {
                     var o = m
                     const words = this.propertiesList[i]
-                    for(var w = 0; w < words.length; w++) {
+                    for (var w = 0; w < words.length; w++) {
                         const reg = new RegExp('\\{' + w + '\\}', 'g');
                         if (o.search(reg) > -1) {
-                            o = o.replace(reg, words[w]);                            
+                            o = o.replace(reg, words[w]);
                         }
                     }
                     retList.push(o)
@@ -110,14 +104,14 @@
         get output3() {
             var retList = []
             var m = this.modifier3
-            if(m.length > 0){
-                for(var i = 0; i < this.propertiesList.length; i++){
+            if (m.length > 0) {
+                for (var i = 0; i < this.propertiesList.length; i++) {
                     var o = m
                     const words = this.propertiesList[i]
-                    for(var w = 0; w < words.length; w++) {
+                    for (var w = 0; w < words.length; w++) {
                         const reg = new RegExp('\\{' + w + '\\}', 'g');
                         if (o.search(reg) > -1) {
-                            o = o.replace(reg, words[w]);                            
+                            o = o.replace(reg, words[w]);
                         }
                     }
                     retList.push(o)
@@ -128,14 +122,14 @@
         get output4() {
             var retList = []
             var m = this.modifier4
-            if(m.length > 0){
-                for(var i = 0; i < this.propertiesList.length; i++){
+            if (m.length > 0) {
+                for (var i = 0; i < this.propertiesList.length; i++) {
                     var o = m
                     const words = this.propertiesList[i]
-                    for(var w = 0; w < words.length; w++) {
+                    for (var w = 0; w < words.length; w++) {
                         const reg = new RegExp('\\{' + w + '\\}', 'g');
                         if (o.search(reg) > -1) {
-                            o = o.replace(reg, words[w]);                            
+                            o = o.replace(reg, words[w]);
                         }
                     }
                     retList.push(o)
@@ -146,14 +140,14 @@
         get output5() {
             var retList = []
             var m = this.modifier5
-            if(m.length > 0){
-                for(var i = 0; i < this.propertiesList.length; i++){
+            if (m.length > 0) {
+                for (var i = 0; i < this.propertiesList.length; i++) {
                     var o = m
                     const words = this.propertiesList[i]
-                    for(var w = 0; w < words.length; w++) {
+                    for (var w = 0; w < words.length; w++) {
                         const reg = new RegExp('\\{' + w + '\\}', 'g');
                         if (o.search(reg) > -1) {
-                            o = o.replace(reg, words[w]);                            
+                            o = o.replace(reg, words[w]);
                         }
                     }
                     retList.push(o)
@@ -161,52 +155,52 @@
             }
             return retList.join('\n')
         }
-       
+
     }">
         <div class="grid grid-cols-12 grid-flow-row gap-3 h-screen p-3">
             <div class="box-1">
                 <div>
                     <label>Class Definition</label>
-                    <textarea class="w-full h-full " x-model="input"></textarea>
+                    <textarea class="" x-model="input"></textarea>
                 </div>
             </div>
             <div class="box-1">
                 <div>
                     <label>Modifier 1</label>
-                    <textarea class="w-full h-full " x-model="modifier1"></textarea>
+                    <textarea class="" x-model="modifier1"></textarea>
                 </div>
             </div>
             <div class="box-1">
                 <div>
                     <label>Modifier 2</label>
-                    <textarea class="w-full h-full " x-model="modifier2"></textarea>
+                    <textarea class="" x-model="modifier2"></textarea>
                 </div>
             </div>
             <div class="box-1">
                 <div>
                     <label>Modifier 3</label>
-                    <textarea class="w-full h-full " x-model="modifier3"></textarea>
+                    <textarea class="" x-model="modifier3"></textarea>
                 </div>
             </div>
             <div class="box-1">
                 <div>
                     <label>Modifier 4</label>
-                    <textarea class="w-full h-full " x-model="modifier4"></textarea>
+                    <textarea class="" x-model="modifier4"></textarea>
                 </div>
             </div>
             <div class="box-1">
                 <div>
                     <label>Modifier 5</label>
-                    <textarea class="w-full h-full " x-model="modifier5"></textarea>
+                    <textarea class="" x-model="modifier5"></textarea>
                 </div>
             </div>
             <div class="box-1">
                 <div>
                     <label>Property RegExp</label>
-                    <textarea class="w-full pb-5" x-model="propertiesRegex"></textarea>
+                    <textarea class="w-full h-full" x-model="propertiesRegex"></textarea>
                 </div>
             </div>
-            <div class="box-1">
+            <div class="box-1 row-span-2">
                 <div>
                     <div class="flex justify-between items-center"><label>Output 1</label>
                         <button type="button" class="text-yellow-50 hover:text-yellow-500 mb-1"
@@ -221,7 +215,7 @@
                     <textarea class="w-full h-full whitespace-pre" x-model="output1"></textarea>
                 </div>
             </div>
-            <div class="box-1">
+            <div class="box-1 row-span-2">
                 <div>
                     <div class="flex justify-between items-center"><label>Output 2</label>
                         <button type="button" class="text-yellow-50 hover:text-yellow-500 mb-1"
@@ -236,7 +230,7 @@
                     <textarea class="w-full h-full whitespace-pre" x-model="output2"></textarea>
                 </div>
             </div>
-            <div class="box-1">
+            <div class="box-1 row-span-2">
                 <div>
                     <div class="flex justify-between items-center"><label>Output 3</label>
                         <button type="button" class="text-yellow-50 hover:text-yellow-500 mb-1"
@@ -251,7 +245,7 @@
                     <textarea class="w-full h-full whitespace-pre" x-model="output3"></textarea>
                 </div>
             </div>
-            <div class="box-1">
+            <div class="box-1 row-span-2">
                 <div>
                     <div class="flex justify-between items-center"><label>Output 4</label>
                         <button type="button" class="text-yellow-50 hover:text-yellow-500 mb-1"
@@ -266,7 +260,7 @@
                     <textarea class="w-full h-full whitespace-pre" x-model="output4"></textarea>
                 </div>
             </div>
-            <div class="box-1">
+            <div class="box-1 row-span-2">
                 <div>
                     <div class="flex justify-between items-center"><label>Output 5</label>
                         <button type="button" class="text-yellow-50 hover:text-yellow-500 mb-1"
@@ -284,21 +278,34 @@
             <div class="box-1">
                 <div>
                     <label>Extracted Property Data</label>
-                    <textarea class="w-full h-full " x-model="properties"></textarea>
+                    <textarea class="" x-model="properties"></textarea>
                 </div>
             </div>
+            <!-- <div class="box-1"></div>
             <div class="box-1"></div>
             <div class="box-1"></div>
-            <div class="box-1">
-
-            </div>
-            <div class="box-1"></div>
-            <div class="box-1">
-
-            </div>
+            <div class="box-1" ></div> -->
+            <!-- <div class="box-1"></div> -->
         </div>
     </div>
 
+
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+
+    <!-- Alpine Plugins -->
+    <script src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@ryangjchandler/alpine-clipboard@2.x.x/dist/alpine-clipboard.js"
+        defer></script>
+    <!-- Alpine Core -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+    
+
 </body>
+
+
 
 </html>
