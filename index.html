@@ -56,25 +56,20 @@
 
     <div x-data="appObject()">
         <div class="grid grid-cols-12 grid-flow-row gap-3 h-screen p-3 bg-green-50">
-            <div class="box-1">
-                <div>
-                    <label>Class Definition</label>
-                    <textarea id="classDefinition" class="" x-model="input"></textarea>
-                </div>
-            </div>
-            <div class="box-2">
-                <div>
-                    <label>Modifier 1</label>
-                    <textarea class="" x-model="modifier1"></textarea>
-                </div>
-            </div>
-            <div class="box-2">
+            <Box1 label="Class Definition" id="classDefinition1" model="input" ></Box1>
+            <Box2 label="Modifier 1" id="modifier1" model="modifier1" ></Box2>
+            <Box2 label="Modifier 2" id="modifier2" model="modifier2" ></Box2>
+            <Box2 label="Modifier 3" id="modifier2" model="modifier3" ></Box2>
+            <Box2 label="Modifier 4" id="modifier2" model="modifier4" ></Box2>
+            <Box2 label="Modifier 5" id="modifier2" model="modifier5" ></Box2>
+           
+            <!-- <div class="box-2">
                 <div>
                     <label>Modifier 2</label>
                     <textarea class="" x-model="modifier2"></textarea>
                 </div>
-            </div>
-            <div class="box-2">
+            </div> -->
+            <!-- <div class="box-2">
                 <div>
                     <label>Modifier 3</label>
                     <textarea class="" x-model="modifier3"></textarea>
@@ -91,13 +86,14 @@
                     <label>Modifier 5</label>
                     <textarea class="" x-model="modifier5"></textarea>
                 </div>
-            </div>
-            <div class="box-1">
+            </div> -->
+            <Box1 label="Property RegExp" id="propertiesRegex" model="propertiesRegex" ></Box1>
+            <!-- <div class="box-1">
                 <div>
                     <label>Property RegExp</label>
                     <textarea class="w-full h-full" x-model="propertiesRegex"></textarea>
                 </div>
-            </div>
+            </div> -->
             <div class="box-2 row-span-2">
                 <div>
                     <div class="flex justify-between items-center"><label>Output 1</label>
@@ -191,7 +187,10 @@
     <!-- Alpine Core -->
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
+
+
     <script src="/js/index.js"></script>
+
 
 
 </body>

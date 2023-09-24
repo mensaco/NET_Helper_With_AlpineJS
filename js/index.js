@@ -1,12 +1,41 @@
-// // copy text
-// window.copyText = function (textToCopy) {
-//     navigator.clipboard.writeText(textToCopy);
-//     document.body.removeChild(myTemporaryInputElement);
-// }
+window.makeControls = () => {
+    
+    [...document.querySelectorAll("Box1")].forEach(c => {
+        const n = `
+        <div class="box-1">
+            <div>
+                <label for='${c.getAttribute('id')}'>${c.getAttribute('label')}</label>
+                <textarea id="${c.getAttribute('id')}" class="${c.getAttribute('class')??''}" x-model="${c.getAttribute('model')}"></textarea>
+            </div>
+        </div>`
 
+        var d = document.createElement("div")
+        d.innerHTML = n
 
+        c.replaceWith(d.firstElementChild)
+    });
+
+    [...document.querySelectorAll("Box2")].forEach(c => {
+        const n = `
+        <div class="box-2">
+            <div>
+                <label for='${c.getAttribute('id')}'>${c.getAttribute('label')}</label>
+                <textarea id="${c.getAttribute('id')}" class="${c.getAttribute('class')??''}" x-model="${c.getAttribute('model')}"></textarea>
+            </div>
+        </div>`
+
+        var d = document.createElement("div")
+        d.innerHTML = n
+
+        c.replaceWith(d.firstElementChild)
+    });
+
+}
 
 window.appObject = () => {
+    
+    window.makeControls();
+
     return {
         input: Alpine.$persist(`
         public class ServeranforderungenDto : ServeranforderungAbgespeckt //, IHasID, IHasTimeStamps
@@ -535,10 +564,9 @@ window.appObject = () => {
         get properties() {
             return this.propertiesList.map(p => p.join(' ')).join('\n')
         }, 
-        get output() {
+        output(m) {
 
             var retList = []
-            var m = this.modifier
             if (m.length > 0) {
                 for (var i = 0; i < this.propertiesList.length; i++) {
                     var o = m
@@ -553,27 +581,21 @@ window.appObject = () => {
                 }
             }
             return retList.join('\n')
-
         },       
         get output1() {
-            this.modifier = this.modifier1
-            return this.output
+            return this.output(this.modifier1)
         },
         get output2() {
-            this.modifier = this.modifier2
-            return this.output
+            return this.output(this.modifier2)
         },
         get output3() {
-            this.modifier = this.modifier3
-            return this.output
+            return this.output(this.modifier3)
         },
         get output4() {
-            this.modifier = this.modifier4
-            return this.output
+            return this.output(this.modifier4)
         },
         get output5() {
-            this.modifier = this.modifier5
-            return this.output
+            return this.output(this.modifier5)
         },
         copyText(textToCopy) {
             navigator.clipboard.writeText(textToCopy);
@@ -581,3 +603,6 @@ window.appObject = () => {
 
     }
 }
+
+
+
